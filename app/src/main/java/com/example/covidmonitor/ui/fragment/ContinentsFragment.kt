@@ -1,17 +1,18 @@
-package com.example.covidmonitor.ui
+package com.example.covidmonitor.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.covidmonitor.R.layout.fragment_countries
 import com.example.covidmonitor.databinding.FragmentContinentsBinding
 import com.example.covidmonitor.mvp.model.repo.ContinentsRepo
 import com.example.covidmonitor.mvp.presenter.ContinentsPresenter
 import com.example.covidmonitor.mvp.view.ContinentsView
-import com.example.covidmonitor.mvp.view.CountriesView
+import com.example.covidmonitor.ui.AbsFragment
+import com.example.covidmonitor.ui.BackButtonListener
+import com.example.covidmonitor.ui.adapter.ContinentsRVAdapter
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.ktx.moxyPresenter
 import ru.terrakok.cicerone.Router

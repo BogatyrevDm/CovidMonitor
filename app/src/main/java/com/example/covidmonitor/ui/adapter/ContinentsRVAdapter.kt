@@ -1,8 +1,7 @@
-package com.example.covidmonitor.ui
+package com.example.covidmonitor.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.contentValuesOf
 import androidx.recyclerview.widget.RecyclerView
 import com.example.covidmonitor.databinding.ItemContinentBinding
 import com.example.covidmonitor.mvp.presenter.ContinentListPresenter

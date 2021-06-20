@@ -9,7 +9,8 @@ import dagger.android.HasAndroidInjector
 import moxy.MvpAppCompatActivity
 import javax.inject.Inject
 
-abstract class AbsActivity(@LayoutRes contentLayoutId: Int) : MvpAppCompatActivity(contentLayoutId), HasAndroidInjector {
+abstract class AbsActivity(@LayoutRes contentLayoutId: Int) : MvpAppCompatActivity(contentLayoutId),
+    HasAndroidInjector {
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>

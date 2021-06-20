@@ -14,4 +14,4 @@ data class Continent(
     @SerializedName("recovered") val recovered: String,
     @SerializedName("todayRecovered") val todayRecovered: String,
     @SerializedName("countries") val countries: List<String>
-):Parcelable
+) : Parcelable

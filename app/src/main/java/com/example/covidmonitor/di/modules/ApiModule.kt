@@ -1,8 +1,8 @@
 package com.example.covidmonitor.di.modules
 
 import com.example.covidmonitor.mvp.model.api.IDataSource
-import com.google.gson.GsonBuilder
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -24,7 +24,7 @@ class ApiModule {
 
     @Singleton
     @Provides
-    fun api(@Named("baseUrl") baseUrl: String,gson:Gson):IDataSource = Retrofit.Builder()
+    fun api(@Named("baseUrl") baseUrl: String, gson: Gson): IDataSource = Retrofit.Builder()
         .baseUrl(baseUrl)
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create(gson))

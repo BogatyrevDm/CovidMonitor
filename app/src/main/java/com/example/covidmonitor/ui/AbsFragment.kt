@@ -9,7 +9,8 @@ import dagger.android.support.AndroidSupportInjection
 import moxy.MvpAppCompatFragment
 import javax.inject.Inject
 
-abstract class AbsFragment(@LayoutRes contentLayoutId: Int) : MvpAppCompatFragment(contentLayoutId), HasAndroidInjector {
+abstract class AbsFragment(@LayoutRes contentLayoutId: Int) : MvpAppCompatFragment(contentLayoutId),
+    HasAndroidInjector {
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>

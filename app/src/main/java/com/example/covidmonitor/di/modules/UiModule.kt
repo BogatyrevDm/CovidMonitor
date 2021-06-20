@@ -1,8 +1,7 @@
 package com.example.covidmonitor.di.modules
 
-import com.example.covidmonitor.ui.ContinentsFragment
-import com.example.covidmonitor.ui.CountriesFragment
-import com.example.covidmonitor.ui.MainActivity
+import com.example.covidmonitor.ui.fragment.ContinentsFragment
+import com.example.covidmonitor.ui.fragment.CountriesFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

@@ -1,9 +1,8 @@
 package com.example.covidmonitor.navigation
 
-import androidx.fragment.app.Fragment
-import com.example.covidmonitor.ui.CountriesFragment
+import com.example.covidmonitor.ui.fragment.CountriesFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
-class CountriesScreen : SupportAppScreen() {
-    override fun getFragment() = CountriesFragment.newInstance()
+class CountriesScreen(private val name: String) : SupportAppScreen() {
+    override fun getFragment() = CountriesFragment.newInstance(name)
 }

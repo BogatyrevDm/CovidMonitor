@@ -1,10 +1,7 @@
 package com.example.covidmonitor.di
 
 import android.content.Context
-import com.example.covidmonitor.di.modules.ApiModule
-import com.example.covidmonitor.di.modules.MainModule
-import com.example.covidmonitor.di.modules.RepoModule
-import com.example.covidmonitor.di.modules.UiModule
+import com.example.covidmonitor.di.modules.*
 import com.example.covidmonitor.ui.App
 import dagger.BindsInstance
 import dagger.Component
@@ -21,6 +18,7 @@ import javax.inject.Singleton
         AndroidInjectionModule::class,
         ApiModule::class,
         RepoModule::class,
+        ImageModule::class,
         UiModule::class,
         MainModule::class
     ]

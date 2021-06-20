@@ -1,6 +1,6 @@
 package com.example.covidmonitor.mvp.view
 
-interface ContinentItemView:IItemView {
+interface ContinentItemView : IItemView {
     fun setName(text: String)
     fun setCases(text: String)
     fun setTodayCases(text: String)
@@ -8,5 +8,4 @@ interface ContinentItemView:IItemView {
     fun setTodayDeaths(text: String)
     fun setRecovered(text: String)
     fun setTodayRecovered(text: String)
-
 }

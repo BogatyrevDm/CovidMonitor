@@ -14,5 +14,5 @@ data class Country(
     @SerializedName("recovered") val recovered: String,
     @SerializedName("todayRecovered") val todayRecovered: String,
     @SerializedName("population") val population: String,
-    @SerializedName("flag") val flag: String
-):Parcelable
+    @SerializedName("countryInfo") val countryInfo: CountryInfo
+) : Parcelable

@@ -49,9 +49,8 @@ class ContinentsPresenter(
         viewState.init()
         loadData()
         continentListPresenter.itemClickListener = { itemView ->
-//            router.navigateTo(CountriesScreen(continentListPresenter.continents[itemView.pos].countries)
             router.navigateTo(
-                CountriesScreen()
+                CountriesScreen(continentListPresenter.continents[itemView.pos].name)
             )
         }
 
