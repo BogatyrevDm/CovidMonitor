@@ -8,17 +8,15 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.covidmonitor.R.layout.fragment_countries
 import com.example.covidmonitor.databinding.FragmentCountriesBinding
+import com.example.covidmonitor.mvp.model.entity.Continent
 import com.example.covidmonitor.mvp.model.image.IImageLoader
-import com.example.covidmonitor.mvp.model.repo.ContinentsRepo
 import com.example.covidmonitor.mvp.model.repo.CountriesRepo
 import com.example.covidmonitor.mvp.presenter.CountriesPresenter
 import com.example.covidmonitor.mvp.view.CountriesView
 import com.example.covidmonitor.ui.AbsFragment
 import com.example.covidmonitor.ui.BackButtonListener
 import com.example.covidmonitor.ui.adapter.CountriesRVAdapter
-import io.reactivex.rxjava3.core.Scheduler
 import moxy.ktx.moxyPresenter
-import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 
@@ -43,16 +41,7 @@ class CountriesFragment : AbsFragment(fragment_countries), CountriesView, BackBu
     }
 
     @Inject
-    lateinit var continentsRepo: ContinentsRepo
-
-    @Inject
     lateinit var countriesRepo: CountriesRepo
-
-    @Inject
-    lateinit var router: Router
-
-    @Inject
-    lateinit var scheduler: Scheduler
 
     @Inject
     lateinit var imageLoader: IImageLoader<ImageView>
@@ -84,37 +73,19 @@ class CountriesFragment : AbsFragment(fragment_countries), CountriesView, BackBu
         _binding = null
     }
 
-    override fun setName(text: String) {
-        binding.tvName.text = text
-    }
-
-    override fun setCases(text: String) {
-        binding.tvCases.text = text
-    }
-
-    override fun setTodayCases(text: String) {
-        binding.tvTodayCases.text = text
-    }
-
-    override fun setDeaths(text: String) {
-        binding.tvDeaths.text = text
-    }
-
-    override fun setTodayDeaths(text: String) {
-        binding.tvTodayDeaths.text = text
-    }
-
-    override fun setRecovered(text: String) {
-        binding.tvRecovered.text = text
-    }
-
-    override fun setTodayRecovered(text: String) {
-        binding.tvTodayRecovered.text = text
+    override fun showContinent(continent: Continent) {
+        binding.tvName.text = continent.name
+        binding.tvCases.text = continent.cases
+        binding.tvTodayCases.text = continent.todayCases
+        binding.tvDeaths.text = continent.deaths
+        binding.tvTodayDeaths.text = continent.todayDeaths
+        binding.tvRecovered.text = continent.recovered
+        binding.tvTodayRecovered.text = continent.todayRecovered
     }
 
     override fun init() {
         binding.rvCountries.layoutManager = LinearLayoutManager(context)
-        adapter = CountriesRVAdapter(presenter.countriesListPresenter, imageLoader)
+        adapter = CountriesRVAdapter(presenter.getCountriesListPresenter(), imageLoader)
         binding.rvCountries.adapter = adapter
     }
 

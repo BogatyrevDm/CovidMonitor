@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.covidmonitor.databinding.ItemCountryBinding
+import com.example.covidmonitor.mvp.model.entity.Country
 import com.example.covidmonitor.mvp.model.image.IImageLoader
 import com.example.covidmonitor.mvp.presenter.CountryListPresenter
 import com.example.covidmonitor.mvp.view.CountryItemView
@@ -34,32 +35,16 @@ class CountriesRVAdapter(
     inner class ViewHolder(val vb: ItemCountryBinding) : RecyclerView.ViewHolder(vb.root),
         CountryItemView {
         override var pos = -1
-        override fun setName(text: String) {
-            vb.tvName.text = text
-        }
 
-        override fun setCases(text: String) {
-            vb.tvCases.text = text
-        }
+        override fun showCountry(country: Country) {
+            vb.tvName.text = country.name
+            vb.tvCases.text = country.cases
+            vb.tvTodayCases.text = country.todayCases
+            vb.tvDeaths.text = country.deaths
+            vb.tvTodayDeaths.text = country.todayDeaths
+            vb.tvRecovered.text = country.recovered
+            vb.tvTodayRecovered.text = country.todayRecovered
 
-        override fun setTodayCases(text: String) {
-            vb.tvTodayCases.text = text
-        }
-
-        override fun setDeaths(text: String) {
-            vb.tvDeaths.text = text
-        }
-
-        override fun setTodayDeaths(text: String) {
-            vb.tvTodayDeaths.text = text
-        }
-
-        override fun setRecovered(text: String) {
-            vb.tvRecovered.text = text
-        }
-
-        override fun setTodayRecovered(text: String) {
-            vb.tvTodayRecovered.text = text
         }
 
         override fun loadImage(text: String) {

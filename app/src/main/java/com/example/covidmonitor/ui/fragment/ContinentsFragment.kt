@@ -7,16 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.covidmonitor.R.layout.fragment_countries
 import com.example.covidmonitor.databinding.FragmentContinentsBinding
-import com.example.covidmonitor.mvp.model.repo.ContinentsRepo
 import com.example.covidmonitor.mvp.presenter.ContinentsPresenter
 import com.example.covidmonitor.mvp.view.ContinentsView
 import com.example.covidmonitor.ui.AbsFragment
 import com.example.covidmonitor.ui.BackButtonListener
 import com.example.covidmonitor.ui.adapter.ContinentsRVAdapter
-import io.reactivex.rxjava3.core.Scheduler
 import moxy.ktx.moxyPresenter
-import ru.terrakok.cicerone.Router
-import javax.inject.Inject
 
 
 class ContinentsFragment : AbsFragment(fragment_countries), ContinentsView, BackButtonListener {
@@ -30,15 +26,6 @@ class ContinentsFragment : AbsFragment(fragment_countries), ContinentsView, Back
 
     private var _binding: FragmentContinentsBinding? = null
     private val binding get() = _binding!!
-
-    @Inject
-    lateinit var continentsRepo: ContinentsRepo
-
-    @Inject
-    lateinit var router: Router
-
-    @Inject
-    lateinit var scheduler: Scheduler
 
     val presenter by moxyPresenter {
         ContinentsPresenter(continentsRepo, scheduler, router)
@@ -62,7 +49,7 @@ class ContinentsFragment : AbsFragment(fragment_countries), ContinentsView, Back
 
     override fun init() {
         binding.rvContinents.layoutManager = LinearLayoutManager(context)
-        adapter = ContinentsRVAdapter(presenter.continentListPresenter)
+        adapter = ContinentsRVAdapter(presenter.getСontinentListPresenter())
         binding.rvContinents.adapter = adapter
     }
 

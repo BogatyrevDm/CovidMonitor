@@ -28,13 +28,7 @@ class ContinentsPresenter(
         }
 
         private fun onBindViewSuccess(view: ContinentItemView, continent: Continent) {
-            view.setName(continent.name)
-            view.setCases(continent.cases)
-            view.setTodayCases(continent.todayCases)
-            view.setDeaths(continent.deaths)
-            view.setTodayDeaths(continent.todayDeaths)
-            view.setRecovered(continent.recovered)
-            view.setTodayRecovered(continent.todayRecovered)
+            view.showContinent(continent)
         }
 
         private fun onBindViewError(error: Throwable) {
@@ -42,8 +36,11 @@ class ContinentsPresenter(
         }
     }
 
-    val continentListPresenter = ContinentsListPresenter()
+    private val continentListPresenter = ContinentsListPresenter()
     private var disposable = CompositeDisposable()
+
+    fun getСontinentListPresenter() = continentListPresenter
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
