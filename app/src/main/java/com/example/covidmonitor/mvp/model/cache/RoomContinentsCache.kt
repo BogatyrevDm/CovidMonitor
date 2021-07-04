@@ -37,4 +37,21 @@ class RoomContinentsCache(val db: Database) : ContinentCache {
             )
         }
     }
+
+    override fun getContinent(name: String): Single<Continent> =
+        Single.fromCallable {
+            val roomContinent = db.continentDao.findByName(name)
+            roomContinent?.let { continentItem ->
+                Continent(
+                    continentItem.name,
+                    continentItem.cases,
+                    continentItem.todayCases,
+                    continentItem.deaths,
+                    continentItem.todayDeaths,
+                    continentItem.recovered,
+                    continentItem.todayRecovered,
+                    continentItem.countries.split(",").map { it.trim() }
+                )
+            }
+        }
 }

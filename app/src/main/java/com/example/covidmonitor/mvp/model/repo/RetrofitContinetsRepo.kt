@@ -1,7 +1,5 @@
 package com.example.covidmonitor.mvp.model.repo
 
-import com.example.covidmonitor.mvp.model.entity.Continent
-import com.example.covidmonitor.mvp.model.entity.Country
 import com.example.covidmonitor.mvp.model.api.IDataSource
 import com.example.covidmonitor.mvp.model.cache.ContinentCache
 import com.example.covidmonitor.mvp.model.network.NetworkStatus
@@ -28,7 +26,12 @@ class RetrofitContinetsRepo(
     }.subscribeOn(Schedulers.io())
 
 
-    override fun getContinentByName(name: String): Single<Continent> = api.getContinentByName(name)
-    override fun getCountries(countries: List<String>): Single<List<Country>> =
-        api.getCountries(countries.joinToString(","))
+    override fun getContinentByName(name: String) =
+        networkStatus.isOnlineSingle().flatMap { isOnline ->
+            if (isOnline) {
+                api.getContinentByName(name)
+            } else {
+                cache.getContinent(name)
+            }
+        }.subscribeOn(Schedulers.io())
 }

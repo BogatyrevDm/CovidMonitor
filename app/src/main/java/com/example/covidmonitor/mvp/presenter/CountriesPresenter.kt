@@ -3,6 +3,7 @@ package com.example.covidmonitor.mvp.presenter
 import com.example.covidmonitor.mvp.model.entity.Continent
 import com.example.covidmonitor.mvp.model.entity.Country
 import com.example.covidmonitor.mvp.model.repo.ContinentsRepo
+import com.example.covidmonitor.mvp.model.repo.CountriesRepo
 import com.example.covidmonitor.mvp.view.CountriesView
 import com.example.covidmonitor.mvp.view.CountryItemView
 import io.reactivex.rxjava3.core.Scheduler
@@ -15,6 +16,7 @@ import ru.terrakok.cicerone.Router
 class CountriesPresenter(
     private val continentName: String,
     private val continentsRepo: ContinentsRepo,
+    private val countriesRepo: CountriesRepo,
     private val scheduler: Scheduler,
     private val router: Router
 ) : MvpPresenter<CountriesView>() {
@@ -74,8 +76,8 @@ class CountriesPresenter(
         viewState.setRecovered(continent.recovered)
         viewState.setTodayRecovered(continent.todayRecovered)
 
-        disposable += continentsRepo
-            .getCountries(continent.countries)
+        disposable += countriesRepo
+            .getCountries(continent.name, continent.countries)
             .observeOn(scheduler)
             .subscribe(
                 ::onLoadCountriesSuccess,
@@ -88,9 +90,7 @@ class CountriesPresenter(
         countriesListPresenter.countries.clear()
         countriesListPresenter.countries.addAll(countries)
         viewState.updateList()
-        countriesListPresenter.itemClickListener = { itemView ->
-            //router.navigateTo(RepoScreen(userLogin, reposListPresenter.repos[itemView.pos].name))
-        }
+        countriesListPresenter.itemClickListener = null
     }
 
     override fun onDestroy() {

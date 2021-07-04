@@ -10,6 +10,7 @@ import com.example.covidmonitor.R.layout.fragment_countries
 import com.example.covidmonitor.databinding.FragmentCountriesBinding
 import com.example.covidmonitor.mvp.model.image.IImageLoader
 import com.example.covidmonitor.mvp.model.repo.ContinentsRepo
+import com.example.covidmonitor.mvp.model.repo.CountriesRepo
 import com.example.covidmonitor.mvp.presenter.CountriesPresenter
 import com.example.covidmonitor.mvp.view.CountriesView
 import com.example.covidmonitor.ui.AbsFragment
@@ -45,6 +46,9 @@ class CountriesFragment : AbsFragment(fragment_countries), CountriesView, BackBu
     lateinit var continentsRepo: ContinentsRepo
 
     @Inject
+    lateinit var countriesRepo: CountriesRepo
+
+    @Inject
     lateinit var router: Router
 
     @Inject
@@ -57,6 +61,7 @@ class CountriesFragment : AbsFragment(fragment_countries), CountriesView, BackBu
         CountriesPresenter(
             continentName,
             continentsRepo,
+            countriesRepo,
             scheduler,
             router
         )
@@ -109,7 +114,7 @@ class CountriesFragment : AbsFragment(fragment_countries), CountriesView, BackBu
 
     override fun init() {
         binding.rvCountries.layoutManager = LinearLayoutManager(context)
-        adapter = CountriesRVAdapter(presenter.countriesListPresenter,imageLoader)
+        adapter = CountriesRVAdapter(presenter.countriesListPresenter, imageLoader)
         binding.rvCountries.adapter = adapter
     }
 

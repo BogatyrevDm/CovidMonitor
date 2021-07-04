@@ -9,7 +9,10 @@ import com.example.covidmonitor.mvp.model.image.IImageLoader
 import com.example.covidmonitor.mvp.presenter.CountryListPresenter
 import com.example.covidmonitor.mvp.view.CountryItemView
 
-class CountriesRVAdapter(val presenter: CountryListPresenter, val imageLoader: IImageLoader<ImageView>) :
+class CountriesRVAdapter(
+    val presenter: CountryListPresenter,
+    val imageLoader: IImageLoader<ImageView>
+) :
     RecyclerView.Adapter<CountriesRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -60,7 +63,7 @@ class CountriesRVAdapter(val presenter: CountryListPresenter, val imageLoader: I
         }
 
         override fun loadImage(text: String) {
-            imageLoader.loadInto(text,vb.ivFlag)
+            imageLoader.loadInto(text, vb.ivFlag)
         }
 
 
