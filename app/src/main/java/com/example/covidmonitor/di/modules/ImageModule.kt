@@ -11,5 +11,5 @@ import javax.inject.Singleton
 class ImageModule {
     @Singleton
     @Provides
-    fun imageLoader():IImageLoader<ImageView> = GlideImageLoader()
+    fun provideImageLoader():IImageLoader<ImageView> = GlideImageLoader()
 }

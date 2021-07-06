@@ -28,7 +28,7 @@ class ContinentsFragment : AbsFragment(fragment_countries), ContinentsView, Back
     private val binding get() = _binding!!
 
     val presenter by moxyPresenter {
-        ContinentsPresenter(continentsRepo, scheduler, router)
+        ContinentsPresenter(continentsRepo, scheduler, router, networkStatus)
     }
     var adapter: ContinentsRVAdapter? = null
 
@@ -49,7 +49,7 @@ class ContinentsFragment : AbsFragment(fragment_countries), ContinentsView, Back
 
     override fun init() {
         binding.rvContinents.layoutManager = LinearLayoutManager(context)
-        adapter = ContinentsRVAdapter(presenter.getСontinentListPresenter())
+        adapter = ContinentsRVAdapter(presenter.getContinentListPresenter())
         binding.rvContinents.adapter = adapter
     }
 

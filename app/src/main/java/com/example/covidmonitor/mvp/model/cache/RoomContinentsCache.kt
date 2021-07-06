@@ -5,8 +5,10 @@ import com.example.covidmonitor.mvp.model.entity.room.RoomContinent
 import com.example.covidmonitor.mvp.model.entity.room.db.Database
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class RoomContinentsCache(val db: Database) : ContinentCache {
+class RoomContinentsCache
+    @Inject constructor(private val db: Database) : ContinentCache {
     override fun putContinents(continents: List<Continent>): Completable {
         val roomContinents = continents.map { continentItem ->
             RoomContinent(

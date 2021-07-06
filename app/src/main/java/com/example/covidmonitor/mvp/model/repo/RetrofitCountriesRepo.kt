@@ -6,11 +6,13 @@ import com.example.covidmonitor.mvp.model.entity.Country
 import com.example.covidmonitor.mvp.model.network.NetworkStatus
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
-class RetrofitCountriesRepo(
-    val api: IDataSource,
-    val networkStatus: NetworkStatus,
-    val cache: CountriesCache
+class RetrofitCountriesRepo
+    @Inject constructor(
+    private val api: IDataSource,
+    private val networkStatus: NetworkStatus,
+    private val cache: CountriesCache
 ) : CountriesRepo {
 
     override fun getCountries(

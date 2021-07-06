@@ -5,11 +5,13 @@ import com.example.covidmonitor.mvp.model.cache.ContinentCache
 import com.example.covidmonitor.mvp.model.network.NetworkStatus
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
-class RetrofitContinetsRepo(
-    val api: IDataSource,
-    val networkStatus: NetworkStatus,
-    val cache: ContinentCache
+class RetrofitContinetsRepo
+    @Inject constructor(
+    private val api: IDataSource,
+    private val networkStatus: NetworkStatus,
+    private val cache: ContinentCache
 ) : ContinentsRepo {
     override fun getContinents() = networkStatus.isOnlineSingle().flatMap { isOnline ->
         if (isOnline) {

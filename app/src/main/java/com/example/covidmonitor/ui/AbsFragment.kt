@@ -2,6 +2,7 @@ package com.example.covidmonitor.ui
 
 import android.content.Context
 import androidx.annotation.LayoutRes
+import com.example.covidmonitor.mvp.model.network.NetworkStatus
 import com.example.covidmonitor.mvp.model.repo.ContinentsRepo
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -22,6 +23,9 @@ abstract class AbsFragment(@LayoutRes contentLayoutId: Int) : MvpAppCompatFragme
 
     @Inject
     lateinit var continentsRepo: ContinentsRepo
+
+    @Inject
+    lateinit var networkStatus: NetworkStatus
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>

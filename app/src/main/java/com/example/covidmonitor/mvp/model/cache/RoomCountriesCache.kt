@@ -6,8 +6,10 @@ import com.example.covidmonitor.mvp.model.entity.room.RoomCountry
 import com.example.covidmonitor.mvp.model.entity.room.db.Database
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class RoomCountriesCache(val db: Database) : CountriesCache {
+class RoomCountriesCache
+    @Inject constructor(private val db: Database) : CountriesCache {
     override fun putCountries(continent: String, countries: List<Country>): Completable {
         val roomContinent = continent.let {
             db.continentDao.findByName(it)
