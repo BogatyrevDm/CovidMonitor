@@ -7,4 +7,5 @@ import io.reactivex.rxjava3.core.Single
 interface ContinentCache {
     fun putContinents(continents: List<Continent>): Completable
     fun getContinents(): Single<List<Continent>>
+    fun getContinent(name:String): Single<Continent>
 }

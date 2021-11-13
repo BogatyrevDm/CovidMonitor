@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-class RoomContinent(
+data class RoomContinent(
     @PrimaryKey var name: String,
     var cases: String,
     var todayCases: String,

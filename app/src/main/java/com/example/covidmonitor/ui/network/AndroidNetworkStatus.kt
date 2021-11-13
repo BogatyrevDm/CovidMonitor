@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import com.example.covidmonitor.mvp.model.network.NetworkStatus
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 class AndroidNetworkStatus(context: Context) : NetworkStatus {
@@ -14,17 +15,27 @@ class AndroidNetworkStatus(context: Context) : NetworkStatus {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val request = NetworkRequest.Builder().build()
-        connectivityManager.registerNetworkCallback(request,
-            object : ConnectivityManager.NetworkCallback() {
-                override fun onAvailable(network: Network) {
-                    statusSubject.onNext(true)
-                }
+        val callBack = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                statusSubject.onNext(true)
+            }
 
-                override fun onLost(network: Network) {
-                    statusSubject.onNext(false)
-                }
-            })
+            override fun onLost(network: Network) {
+                statusSubject.onNext(false)
+            }
+        }
+
+        statusSubject.doOnDispose {
+            connectivityManager.unregisterNetworkCallback(callBack)
+        }
+
+        connectivityManager.registerNetworkCallback(
+            request,
+            callBack
+        )
     }
+
+    override fun isOnline() = statusSubject
 
     override fun isOnlineSingle() = statusSubject.first(false)
 }

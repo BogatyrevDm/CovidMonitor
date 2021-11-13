@@ -1,24 +1,20 @@
 package com.example.covidmonitor.di.modules
 
-import android.content.Context
-import androidx.room.Room
 import com.example.covidmonitor.mvp.model.cache.ContinentCache
+import com.example.covidmonitor.mvp.model.cache.CountriesCache
 import com.example.covidmonitor.mvp.model.cache.RoomContinentsCache
-import com.example.covidmonitor.mvp.model.entity.room.db.Database
+import com.example.covidmonitor.mvp.model.cache.RoomCountriesCache
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class CacheModule {
+interface CacheModule {
     @Singleton
-    @Provides
-    fun database(context: Context): Database =
-        Room.databaseBuilder(context, Database::class.java, Database.DB_NAME)
-            .fallbackToDestructiveMigration()
-            .build()
+    @Binds
+    fun bindContinentsCache(roomContinentsCache:RoomContinentsCache): ContinentCache
 
     @Singleton
-    @Provides
-    fun continentsCache(database: Database): ContinentCache = RoomContinentsCache(database)
+    @Binds
+    fun bindCountriesCache(roomCountriesCache:RoomCountriesCache): CountriesCache
 }

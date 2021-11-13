@@ -1,7 +1,9 @@
 package com.example.covidmonitor.di.modules
 
 import android.content.Context
+import androidx.room.Room
 import com.example.covidmonitor.mvp.model.api.IDataSource
+import com.example.covidmonitor.mvp.model.entity.room.db.Database
 import com.example.covidmonitor.mvp.model.network.NetworkStatus
 import com.example.covidmonitor.ui.network.AndroidNetworkStatus
 import com.google.gson.Gson
@@ -18,16 +20,16 @@ import javax.inject.Singleton
 class ApiModule {
     @Named("baseUrl")
     @Provides
-    fun baseUrl() = "https://corona.lmao.ninja"
+    fun provideBaseUrl() = "https://corona.lmao.ninja"
 
     @Singleton
     @Provides
-    fun gson() = GsonBuilder()
+    fun provideGson() = GsonBuilder()
         .create()
 
     @Singleton
     @Provides
-    fun api(@Named("baseUrl") baseUrl: String, gson: Gson): IDataSource = Retrofit.Builder()
+    fun provideApi(@Named("baseUrl") baseUrl: String, gson: Gson): IDataSource = Retrofit.Builder()
         .baseUrl(baseUrl)
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create(gson))
@@ -36,5 +38,12 @@ class ApiModule {
 
     @Singleton
     @Provides
-    fun networkStatus(context: Context): NetworkStatus = AndroidNetworkStatus(context)
+    fun provideNetworkStatus(context: Context): NetworkStatus = AndroidNetworkStatus(context)
+
+    @Singleton
+    @Provides
+    fun provideDatabase(context: Context): Database =
+        Room.databaseBuilder(context, Database::class.java, Database.DB_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
 }

@@ -17,4 +17,7 @@ interface ContinentDao {
 
     @Query("SELECT * FROM RoomContinent")
     fun getAll(): List<RoomContinent>
+
+    @Query("SELECT * FROM RoomContinent WHERE name= :name LIMIT 1")
+    fun findByName(name:String): RoomContinent?
 }

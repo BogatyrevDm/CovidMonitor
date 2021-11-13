@@ -3,6 +3,7 @@ package com.example.covidmonitor.mvp.presenter
 import com.example.covidmonitor.mvp.model.entity.Continent
 import com.example.covidmonitor.mvp.model.entity.Country
 import com.example.covidmonitor.mvp.model.repo.ContinentsRepo
+import com.example.covidmonitor.mvp.model.repo.CountriesRepo
 import com.example.covidmonitor.mvp.view.CountriesView
 import com.example.covidmonitor.mvp.view.CountryItemView
 import io.reactivex.rxjava3.core.Scheduler
@@ -15,6 +16,7 @@ import ru.terrakok.cicerone.Router
 class CountriesPresenter(
     private val continentName: String,
     private val continentsRepo: ContinentsRepo,
+    private val countriesRepo: CountriesRepo,
     private val scheduler: Scheduler,
     private val router: Router
 ) : MvpPresenter<CountriesView>() {
@@ -29,13 +31,7 @@ class CountriesPresenter(
         }
 
         private fun onBindViewSuccess(view: CountryItemView, country: Country) {
-            view.setName(country.name)
-            view.setCases(country.cases)
-            view.setTodayCases(country.todayCases)
-            view.setDeaths(country.deaths)
-            view.setTodayDeaths(country.todayDeaths)
-            view.setRecovered(country.recovered)
-            view.setTodayRecovered(country.todayRecovered)
+            view.showCountry(country)
             country.countryInfo.flag?.let {
                 view.loadImage(it)
             }
@@ -47,8 +43,11 @@ class CountriesPresenter(
         }
     }
 
-    val countriesListPresenter = CountriesListPresenter()
+    private val countriesListPresenter = CountriesListPresenter()
     private var disposable = CompositeDisposable()
+
+    fun getCountriesListPresenter() = countriesListPresenter
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
@@ -66,16 +65,10 @@ class CountriesPresenter(
     }
 
     private fun onLoadCountrySuccess(continent: Continent) {
-        viewState.setName(continent.name)
-        viewState.setCases(continent.cases)
-        viewState.setTodayCases(continent.todayCases)
-        viewState.setDeaths(continent.deaths)
-        viewState.setTodayDeaths(continent.todayDeaths)
-        viewState.setRecovered(continent.recovered)
-        viewState.setTodayRecovered(continent.todayRecovered)
+        viewState.showContinent(continent)
 
-        disposable += continentsRepo
-            .getCountries(continent.countries)
+        disposable += countriesRepo
+            .getCountries(continent.name, continent.countries)
             .observeOn(scheduler)
             .subscribe(
                 ::onLoadCountriesSuccess,
@@ -88,9 +81,7 @@ class CountriesPresenter(
         countriesListPresenter.countries.clear()
         countriesListPresenter.countries.addAll(countries)
         viewState.updateList()
-        countriesListPresenter.itemClickListener = { itemView ->
-            //router.navigateTo(RepoScreen(userLogin, reposListPresenter.repos[itemView.pos].name))
-        }
+        countriesListPresenter.itemClickListener = null
     }
 
     override fun onDestroy() {
