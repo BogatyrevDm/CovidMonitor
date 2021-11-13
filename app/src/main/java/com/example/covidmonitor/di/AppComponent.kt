@@ -18,6 +18,7 @@ import javax.inject.Singleton
         AndroidInjectionModule::class,
         ApiModule::class,
         RepoModule::class,
+        CacheModule::class,
         ImageModule::class,
         UiModule::class,
         MainModule::class

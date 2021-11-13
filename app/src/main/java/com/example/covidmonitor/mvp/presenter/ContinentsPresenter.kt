@@ -1,6 +1,7 @@
 package com.example.covidmonitor.mvp.presenter
 
-import com.example.covidmonitor.mvp.model.Continent
+import com.example.covidmonitor.mvp.model.entity.Continent
+import com.example.covidmonitor.mvp.model.network.NetworkStatus
 import com.example.covidmonitor.mvp.model.repo.ContinentsRepo
 import com.example.covidmonitor.mvp.view.ContinentItemView
 import com.example.covidmonitor.mvp.view.ContinentsView
@@ -15,7 +16,8 @@ import ru.terrakok.cicerone.Router
 class ContinentsPresenter(
     private val continentsRepo: ContinentsRepo,
     private val scheduler: Scheduler,
-    private val router: Router
+    private val router: Router,
+    private val networkStatus: NetworkStatus
 ) : MvpPresenter<ContinentsView>() {
     class ContinentsListPresenter : ContinentListPresenter {
         val continents = mutableListOf<Continent>()
@@ -28,13 +30,7 @@ class ContinentsPresenter(
         }
 
         private fun onBindViewSuccess(view: ContinentItemView, continent: Continent) {
-            view.setName(continent.name)
-            view.setCases(continent.cases)
-            view.setTodayCases(continent.todayCases)
-            view.setDeaths(continent.deaths)
-            view.setTodayDeaths(continent.todayDeaths)
-            view.setRecovered(continent.recovered)
-            view.setTodayRecovered(continent.todayRecovered)
+            view.showContinent(continent)
         }
 
         private fun onBindViewError(error: Throwable) {
@@ -42,8 +38,11 @@ class ContinentsPresenter(
         }
     }
 
-    val continentListPresenter = ContinentsListPresenter()
+    private val continentListPresenter = ContinentsListPresenter()
     private var disposable = CompositeDisposable()
+
+    fun getContinentListPresenter() = continentListPresenter
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
@@ -57,6 +56,8 @@ class ContinentsPresenter(
     }
 
     fun loadData() {
+        disposable += networkStatus.isOnline().subscribe()
+
         disposable += continentsRepo.getContinents()
             .observeOn(scheduler)
             .subscribe(

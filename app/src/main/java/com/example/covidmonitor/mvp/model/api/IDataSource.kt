@@ -1,7 +1,7 @@
 package com.example.covidmonitor.mvp.model.api
 
-import com.example.covidmonitor.mvp.model.Continent
-import com.example.covidmonitor.mvp.model.Country
+import com.example.covidmonitor.mvp.model.entity.Continent
+import com.example.covidmonitor.mvp.model.entity.Country
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

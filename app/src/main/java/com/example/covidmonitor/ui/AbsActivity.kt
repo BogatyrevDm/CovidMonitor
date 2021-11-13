@@ -7,10 +7,18 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import moxy.MvpAppCompatActivity
+import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 abstract class AbsActivity(@LayoutRes contentLayoutId: Int) : MvpAppCompatActivity(contentLayoutId),
     HasAndroidInjector {
+
+    @Inject
+    lateinit var navigatorHolder: NavigatorHolder
+
+    @Inject
+    lateinit var router: Router
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>

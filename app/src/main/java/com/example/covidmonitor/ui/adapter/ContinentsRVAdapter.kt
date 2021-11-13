@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.covidmonitor.databinding.ItemContinentBinding
+import com.example.covidmonitor.mvp.model.entity.Continent
 import com.example.covidmonitor.mvp.presenter.ContinentListPresenter
 import com.example.covidmonitor.mvp.view.ContinentItemView
 
@@ -27,36 +28,14 @@ class ContinentsRVAdapter(val presenter: ContinentListPresenter) :
 
         override var pos = -1
 
-        override fun setName(text: String) {
-            vb.tvName.text = text
+        override fun showContinent(contint: Continent) {
+            vb.tvName.text = contint.name
+            vb.tvCases.text = contint.cases
+            vb.tvTodayCases.text = contint.todayCases
+            vb.tvDeaths.text = contint.deaths
+            vb.tvTodayDeaths.text = contint.todayDeaths
+            vb.tvRecovered.text = contint.recovered
+            vb.tvTodayRecovered.text = contint.todayRecovered
         }
-
-        override fun setCases(text: String) {
-            vb.tvCases.text = text
-        }
-
-        override fun setTodayCases(text: String) {
-            vb.tvTodayCases.text = text
-        }
-
-        override fun setDeaths(text: String) {
-            vb.tvDeaths.text = text
-        }
-
-        override fun setTodayDeaths(text: String) {
-            vb.tvTodayDeaths.text = text
-        }
-
-        override fun setRecovered(text: String) {
-            vb.tvRecovered.text = text
-        }
-
-        override fun setTodayRecovered(text: String) {
-            vb.tvTodayRecovered.text = text
-        }
-
-
     }
-
-
 }

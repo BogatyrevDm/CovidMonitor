@@ -1,16 +1,20 @@
 package com.example.covidmonitor.di.modules
 
-import com.example.covidmonitor.mvp.model.api.IDataSource
 import com.example.covidmonitor.mvp.model.repo.ContinentsRepo
+import com.example.covidmonitor.mvp.model.repo.CountriesRepo
 import com.example.covidmonitor.mvp.model.repo.RetrofitContinetsRepo
+import com.example.covidmonitor.mvp.model.repo.RetrofitCountriesRepo
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class RepoModule {
+interface RepoModule {
     @Singleton
-    @Provides
-    fun continentsRepo(api: IDataSource): ContinentsRepo = RetrofitContinetsRepo(api)
+    @Binds
+    fun bindContinentsRepo(retrofitContinetsRepo: RetrofitContinetsRepo): ContinentsRepo
 
+    @Singleton
+    @Binds
+    fun bindCountriesRepo(retrofitCountriesRepo: RetrofitCountriesRepo): CountriesRepo
 }
